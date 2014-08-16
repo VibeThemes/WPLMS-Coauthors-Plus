@@ -13,7 +13,7 @@
  *==============================================*/
 
 class WPLMS_Coauthors_Plus{
-  $version = 1.0;
+  private $version = 1.0;
 
   function _construct(){
     if($this -> meet_requirements()){
