@@ -11,11 +11,12 @@
  */
 /* ===== INTEGRATION with WP Coauthor plugin =========
  *==============================================*/
+if ( !defined( 'ABSPATH' ) ) exit;
 
-class WPLMS_Coauthors_Plus{
+class WPLMS_Coauthors_Plus {
   private $version = 1.0;
 
-  function _construct(){
+  public function __construct(){
     if($this -> meet_requirements()){
       $this->init();
     }
@@ -55,26 +56,24 @@ class WPLMS_Coauthors_Plus{
       }
     }
     return $instructor;
- }
+   }
 
- function wplms_coauthor_plus_course_instructor($authors,$post_id){
-   if ( function_exists('get_coauthors')) {
-      $coauthors = get_coauthors( $post_id );
-      if(isset($coauthors) && is_array($coauthors)){
-        foreach($coauthors as $author){
-          if(!in_array($author->ID,$authors))
-            $authors[]=$author->ID;
+   public function wplms_coauthor_plus_course_instructor($authors,$post_id){
+     if ( function_exists('get_coauthors')) {
+        $coauthors = get_coauthors( $post_id );
+        if(isset($coauthors) && is_array($coauthors)){
+          foreach($coauthors as $author){
+            if(!in_array($author->ID,$authors))
+              $authors[]=$author->ID;
+          }
         }
-      }
+    }
+    return $authors;
   }
-  return $authors;
 }
 
-
+if(class_exists('WPLMS_Coauthors_Plus')){ 
+  $wplms_events = new WPLMS_Coauthors_Plus();
 }
-
-
-new WPLMS_Coauthors_Plus( $config );
-
 
 ?>
