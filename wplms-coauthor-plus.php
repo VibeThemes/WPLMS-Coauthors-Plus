@@ -4,7 +4,7 @@
  * Plugin URI: http://www.vibethemes.com/
  * Description: Integrates CoAuthor Plus with WPLMS
  * Author: VibeThemes
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author URI: https://vibethemes.com/
  * License: GNU AGPLv3
  * License URI: http://www.gnu.org/licenses/agpl-3.0.html
@@ -62,6 +62,7 @@ class WPLMS_Coauthors_Plus {
      if ( function_exists('get_coauthors')) {
         $coauthors = get_coauthors( $post_id );
         if(isset($coauthors) && is_array($coauthors)){
+          $authors=array();
           foreach($coauthors as $author){
             if(!in_array($author->ID,$authors))
               $authors[]=$author->ID;
