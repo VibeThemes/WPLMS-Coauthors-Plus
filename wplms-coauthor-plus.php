@@ -32,6 +32,7 @@ class WPLMS_Coauthors_Plus {
   function init(){
     add_filter('wplms_display_course_instructor',array($this,'wplms_coauthor_plus_instructor'),10,2);
     add_filter('wplms_course_instructors',array($this,'wplms_coauthor_plus_course_instructor'),10,2);
+    add_filter('wplms_dashboard_courses_instructors',array($this,'wplms_dashboard_instructors_courses'),10,2);
   }
 
   function wplms_coauthor_plus_instructor($instructor, $id){
@@ -70,6 +71,25 @@ class WPLMS_Coauthors_Plus {
         }
     }
     return $authors;
+  }
+  function wplms_dashboard_instructors_courses($query,$user_id){
+    if(!isset($user_id) || !is_numeric($user_id))
+      $user_id=get_current_user_id();
+
+    global $wpdb;
+    $user_info = get_userdata($user_id);
+    $s='cap-'.$user_info->user_login;
+    $query = $wpdb->prepare("SELECT posts.ID as course_id
+                            FROM {$wpdb->posts} AS posts
+                            LEFT JOIN {$wpdb->term_relationships} txr ON posts.ID = txr.object_id
+                            LEFT JOIN {$wpdb->term_taxonomy} tx ON txr.term_taxonomy_id = tx.term_taxonomy_id
+                            LEFT JOIN {$wpdb->terms} trm ON tx.term_id = trm.term_id
+                            WHERE (tx.taxonomy= 'author' AND trm.slug LIKE '%s')
+                            AND posts.post_status = 'publish'
+                            AND posts.post_type = 'course'
+                            GROUP BY posts.ID
+                            ORDER BY posts.post_date DESC",$s);
+    return $query;
   }
 }
 
