@@ -13,7 +13,8 @@
  *==============================================*/
 if ( !defined( 'ABSPATH' ) ) exit;
 
-class WPLMS_Coauthors_Plus {
+//require_once( dirname( __FILE__ ) . '/../co-authors-plus/co-authors-plus.php' );
+class WPLMS_Coauthors_Plus { //extends coauthors_plus{
   private $version = 1.0;
 
   public function __construct(){
@@ -78,7 +79,7 @@ class WPLMS_Coauthors_Plus {
 
     global $wpdb;
     $user_info = get_userdata($user_id);
-    $s='cap-'.$user_info->user_login;
+    $s='cap-'.$user_info->user_nicename;
     $query = $wpdb->prepare("SELECT posts.ID as course_id
                             FROM {$wpdb->posts} AS posts
                             LEFT JOIN {$wpdb->term_relationships} txr ON posts.ID = txr.object_id
@@ -93,8 +94,12 @@ class WPLMS_Coauthors_Plus {
   }
 }
 
-if(class_exists('WPLMS_Coauthors_Plus')){ 
-  $wplms_events = new WPLMS_Coauthors_Plus();
+
+add_action('init','wplms_coauthors_plus_function');
+function wplms_coauthors_plus_function(){
+  if(class_exists('WPLMS_Coauthors_Plus')){ 
+    $wplms_events = new WPLMS_Coauthors_Plus();
+  }
 }
 
 ?>
