@@ -4,7 +4,7 @@
  * Plugin URI: http://www.vibethemes.com/
  * Description: Integrates CoAuthor Plus with WPLMS
  * Author: VibeThemes
- * Version: 1.0.3
+ * Version: 1.1
  * Author URI: https://vibethemes.com/
  * License: GNU AGPLv3
  * License URI: http://www.gnu.org/licenses/agpl-3.0.html
@@ -52,8 +52,9 @@ class WPLMS_Coauthors_Plus { //extends coauthors_plus{
         $special = bp_get_profile_field_data('field='.$field.'&user_id='.$instructor_id);
         $r = array('item_id'=>$instructor_id,'object'=>'user');
         $instructor .= '<div class="instructor_course"><div class="item-avatar">'.bp_core_fetch_avatar( $r ).'</div>';
-        $instructor .= '<h5 class="course_instructor"><a href="'.bp_core_get_user_domain($instructor_id) .'">'.$displayname.'<span>'.$special.'</span></a></h5>
-        </div>';
+        $instructor .= '<h5 class="course_instructor"><a href="'.bp_core_get_user_domain($instructor_id) .'">'.$displayname.'<span>'.$special.'</span></a></h5>';
+        $instructor .= apply_filters('wplms_instructor_meta','',$instructor_id);
+        $instructor .=  '</div>';
         
       }
     }
