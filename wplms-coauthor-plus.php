@@ -36,7 +36,8 @@ class WPLMS_Coauthors_Plus { //extends coauthors_plus{
     add_filter('wplms_dashboard_courses_instructors',array($this,'wplms_dashboard_instructors_courses'),10,2);
   }
 
-  function wplms_coauthor_plus_instructor($instructor, $id){
+  function wplms_coauthor_plus_instructor($instructor, $id,$r = null){
+
     if ( function_exists('get_coauthors')) {
       $coauthors = get_coauthors( $id );
       $instructor ='';
@@ -53,7 +54,7 @@ class WPLMS_Coauthors_Plus { //extends coauthors_plus{
         $r = array('item_id'=>$instructor_id,'object'=>'user');
         $instructor .= '<div class="instructor_course"><div class="item-avatar">'.bp_core_fetch_avatar( $r ).'</div>';
         $instructor .= '<h5 class="course_instructor"><a href="'.bp_core_get_user_domain($instructor_id) .'">'.$displayname.'<span>'.$special.'</span></a></h5>';
-        $instructor .= apply_filters('wplms_instructor_meta','',$instructor_id);
+        $instructor .= apply_filters('wplms_instructor_meta','',$instructor_id,$r);
         $instructor .=  '</div>';
         
       }
