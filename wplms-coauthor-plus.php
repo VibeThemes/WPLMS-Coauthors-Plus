@@ -4,7 +4,7 @@
  * Plugin URI: http://www.vibethemes.com/
  * Description: Integrates CoAuthor Plus with WPLMS
  * Author: VibeThemes
- * Version: 1.1
+ * Version: 1.1.1
  * Author URI: https://vibethemes.com/
  * License: GNU AGPLv3
  * License URI: http://www.gnu.org/licenses/agpl-3.0.html
@@ -44,10 +44,12 @@ class WPLMS_Coauthors_Plus { //extends coauthors_plus{
       foreach($coauthors as $k=>$inst){
         $instructor_id = $inst->ID;
         $displayname = bp_core_get_user_displayname($instructor_id);
-        if(function_exists('vibe_get_option'))
+        if(function_exists('vibe_get_option')) {
           $field = vibe_get_option('instructor_field');
+          if(!isset($field) || $field =='') $field='Speciality';
+        }
 
-        
+
         $special='';
         if(bp_is_active('xprofile'))
         $special = bp_get_profile_field_data('field='.$field.'&user_id='.$instructor_id);
@@ -56,7 +58,7 @@ class WPLMS_Coauthors_Plus { //extends coauthors_plus{
         $instructor .= '<h5 class="course_instructor"><a href="'.bp_core_get_user_domain($instructor_id) .'">'.$displayname.'<span>'.$special.'</span></a></h5>';
         $instructor .= apply_filters('wplms_instructor_meta','',$instructor_id,$r);
         $instructor .=  '</div>';
-        
+
       }
     }
     return $instructor;
@@ -99,7 +101,7 @@ class WPLMS_Coauthors_Plus { //extends coauthors_plus{
 
 add_action('init','wplms_coauthors_plus_function');
 function wplms_coauthors_plus_function(){
-  if(class_exists('WPLMS_Coauthors_Plus')){ 
+  if(class_exists('WPLMS_Coauthors_Plus')){
     $wplms_events = new WPLMS_Coauthors_Plus();
   }
 }
