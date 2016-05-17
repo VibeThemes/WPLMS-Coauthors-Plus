@@ -51,8 +51,11 @@ class WPLMS_Coauthors_Plus { //extends coauthors_plus{
 
 
         $special='';
-        if(bp_is_active('xprofile'))
-        $special = bp_get_profile_field_data('field='.$field.'&user_id='.$instructor_id);
+        if(bp_is_active('xprofile')) {
+          $special = bp_get_profile_field_data('field='.$field.'&user_id='.$instructor_id);
+          if(empty($special)) $special = '';
+          if(is_array($special)) $special = $special[0];
+        }
         $r = array('item_id'=>$instructor_id,'object'=>'user');
         $instructor .= '<div class="instructor_course"><div class="item-avatar">'.bp_core_fetch_avatar( $r ).'</div>';
         $instructor .= '<h5 class="course_instructor"><a href="'.bp_core_get_user_domain($instructor_id) .'">'.$displayname.'<span>'.$special.'</span></a></h5>';
