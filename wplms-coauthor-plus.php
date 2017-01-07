@@ -4,7 +4,7 @@
  * Plugin URI: http://www.vibethemes.com/
  * Description: Integrates CoAuthor Plus with WPLMS
  * Author: VibeThemes
- * Version: 1.2
+ * Version: 1.2.1
  * Author URI: https://vibethemes.com/
  * License: GNU AGPLv3
  * License URI: http://www.gnu.org/licenses/agpl-3.0.html
@@ -34,7 +34,31 @@ class WPLMS_Coauthors_Plus { //extends coauthors_plus{
     add_filter('wplms_display_course_instructor',array($this,'wplms_coauthor_plus_instructor'),10,2);
     add_filter('wplms_course_instructors',array($this,'wplms_coauthor_plus_course_instructor'),10,2);
     add_filter('wplms_dashboard_courses_instructors',array($this,'wplms_dashboard_instructors_courses'),10,2);
+    add_filter('wplms_count_user_posts_by_type',array($this,'wplms_count_user_posts_by_type'),10,3);
   }
+
+
+    /*
+
+    */
+    function wplms_count_user_posts_by_type($count,$user_id,$post_type='course' ){
+        if(empty($user_id) || empty($post_type))
+            return $count;
+
+        $user = get_userdata( $user_id );
+        //TAXONOMY terms taxonomy author 
+
+        $args = apply_filters('wplms_count_user_posts_by_type_args',array(
+            'post_type'=>$post_type,
+            'author_name'=>$user->user_nicename,
+            'posts_per_page'=>-1,
+            'post_status'=>'publish'
+        ));
+        $query = new WP_Query($args);
+        return $query->post_count;
+
+    }
+
 
   function wplms_coauthor_plus_instructor($instructor, $id,$r = null){
 
