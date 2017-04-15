@@ -24,7 +24,7 @@ class WPLMS_Coauthors_Plus { //extends coauthors_plus{
   }
 
   function meet_requirements(){
-      if ( in_array( 'co-authors-plus/co-authors-plus.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) )
+     if ( in_array( 'co-authors-plus/co-authors-plus.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) || (function_exists('is_plugin_active') && is_plugin_active('co-authors-plus/co-authors-plus.php')) )
         return true;
       else
         return false;
