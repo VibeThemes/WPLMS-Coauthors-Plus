@@ -32,6 +32,7 @@ class WPLMS_Coauthors_Plus { //extends coauthors_plus{
 
   function init(){
     add_filter('wplms_display_course_instructor',array($this,'wplms_coauthor_plus_instructor'),10,2);
+    add_filter('wplms_dashboard_instrcuting_modules_args',array($this,'wplms_co_authors_dashboard_instrcuting_modules_args'));
     add_filter('wplms_course_instructors',array($this,'wplms_coauthor_plus_course_instructor'),10,2);
     add_filter('wplms_dashboard_courses_instructors',array($this,'wplms_dashboard_instructors_courses'),10,2);
     add_filter('wplms_count_user_posts_by_type',array($this,'wplms_count_user_posts_by_type'),10,3);
@@ -104,6 +105,18 @@ class WPLMS_Coauthors_Plus { //extends coauthors_plus{
     }
     return $authors;
   }
+
+
+  function wplms_co_authors_dashboard_instrcuting_modules_args($args){
+    if ( function_exists('get_coauthors') && is_user_logged_in()) {
+        $user_id = get_current_user_id();
+        $user = get_userdata( $user_id );
+        unset($args['author']);
+        $args['author_name'] =$user->user_nicename;
+    }
+    return $args;
+  }
+
   function wplms_dashboard_instructors_courses($query,$user_id=0){
     if(!isset($user_id) || !is_numeric($user_id) || !$user_id)
       $user_id=get_current_user_id();
