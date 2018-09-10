@@ -4,7 +4,7 @@
  * Plugin URI: http://www.vibethemes.com/
  * Description: Integrates CoAuthor Plus with WPLMS
  * Author: VibeThemes
- * Version: 1.3
+ * Version: 3.7
  * Author URI: https://vibethemes.com/
  * License: GNU AGPLv3
  * License URI: http://www.gnu.org/licenses/agpl-3.0.html

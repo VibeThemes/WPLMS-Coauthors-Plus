@@ -1,0 +1,21 @@
+*3.7
+*instructing module courses fix co-author
+*version1.3
+*multisite active plugin fix
+*readme updated
+*User post count fix
+*read me updated
+*1.2
+*wplms_coauthorplusinstructor fix
+*stable tag
+*version1.1
+*readme.txt
+*version1.0.3
+*User Nice name change
+*1.0.2
+*Fixes for WPLMS Dashboard
+*Fixes for Commission Statistics
+*Class initialization
+*Added Version
+*Create README.md
+*Init
